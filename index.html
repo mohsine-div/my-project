@@ -1,2 +1,162 @@
-# my-project
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">log in</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" id="username1">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Password:</label>
+           <input type="password" class="form-control" id="password1">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="loginBtnClicked()">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+  
+  
+  <div class="container">
+    <div class="col-12">
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">mohsine</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">profail</a>
+        </li>
+
+      </ul>
+      <div class="d-flex " style="width: 100%;">
+        <button type="button" class="btn btn-outline-success"data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">login</button>
+        <button type="button" class="btn btn-outline-success">register</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="posts" class="container mt-3">
+    <div class="card mt-3">
+      <div class="card-header">
+        <img class="rounded-circle" src="./1529.png" alt="" width="20px">
+        <span>mohsine elhaouzi</span>
+      </div>
+      <div class="card-body">
+        <img class="w-100" style="height: 200px" src="./1529.png" alt="./1529.png">
+        <h6 class="mt-2">2 minutes ago</h6>
+        <h5>hello world</h5>
+        <p>k on it today I don't think I know how much you love me too you are a great perso
+        </p>
+        <hr>
+        <p>ccomments <span>0</span></p>
+
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header">
+        <img class="rounded-circle" src="./1529.png" alt="" width="20px">
+        <span>mohsine elhaouzi</span>
+      </div>
+      <div class="card-body">
+        <img class="w-100" style="height: 200px" src="./1529.png" alt="./1529.png">
+        <h6 class="mt-2">2 minutes ago</h6>
+        <h5>hello world</h5>
+        <p>k on it today I don't think I know how much you love me too you are a great perso
+        </p>
+        <hr>
+        <p>ccomments <span>0</span></p>
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+  const baseUrl = "https://tarmeezacademy.com/api/v1";
+    axios.get(`${baseUrl}/posts?limit=2`)
+      .then(function(response) {
+        // handle success
+        let posts = response.data.data;
+        document.getElementById('posts').innerHTML = ""
+        for (post of posts) {
+          content = `
+       <div class="card mt-3">
+         <div class="card-header">
+           <img class="rounded-circle" src="${post.author.profile_image}" alt="" width="20px">
+         <span>${post.author.username}</span>
+       </div>
+      <div class="card-body">
+         <img class="w-100" style="height: 200px" src="${post.image}" alt="">
+         <h6 class="mt-2">${post.created_at}</h6>
+        <h5>hello world</h5>
+        <p>k on it today I don't think I know how much you love me too you are a great perso
+        </p>
+         <hr>
+         <p>ccomments <span>0</span></p>
+
+       </div>
+      </div>
+      
+      
+      `
+      document.getElementById('posts').innerHTML += content;
+        }
+
+      })
+      function loginBtnClicked() {
+  const username1 = document.getElementById("username1").value;
+  const password1 = document.getElementById("password1").value;
+  const params = {
+    "username": username1,
+    "password": password1
+  };
+  const url = `${baseUrl}/login`;
+
+  axios.post(url, params)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error("Error occurred:", error);
+      alert("An error occurred during login. Please try again.");
+    });
+}
+
+  </script>
+
+</body>
+
+</html>
 
